@@ -62,7 +62,7 @@ Comprender principios de código limpio mediante análisis práctico de código 
 
 ## 👨‍💻 Autor
 
-**Javier Quilumba** 
+**Javier Quilumba - ** 
 **Jonathan Tipan**
 
 ---
