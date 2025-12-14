@@ -3,7 +3,7 @@
 ## Aplicando Principios de Clean Code en freeCodeCamp
 
 ---
-**Integrantes:** Javier Quilumba
+**Integrantes:** Javier Quilumba y Jonathan Tipan
 
 ## 🎯 Objetivo
 
