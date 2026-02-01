@@ -1,9 +1,8 @@
 package dao.jpa;
 
+import dao.MascotaDAO;
 import java.util.Collections;
 import java.util.List;
-
-import dao.MascotaDAO;
 import modelo.Mascota;
 
 public class JPAMascotaDAO extends JPAGenericDAO<Mascota, Integer> implements MascotaDAO {
@@ -16,8 +15,8 @@ public class JPAMascotaDAO extends JPAGenericDAO<Mascota, Integer> implements Ma
     public List<Mascota> obtenerPorCliente(String cedula) {
         try {
             return em.createQuery(
-                    "SELECT m FROM Mascota m WHERE m.cliente.cedula = :cedula",
-                    Mascota.class)
+                            "SELECT m FROM Mascota m WHERE m.cliente.cedula = :cedula",
+                            Mascota.class)
                     .setParameter("cedula", cedula)
                     .getResultList();
         } catch (Exception e) {
@@ -30,8 +29,8 @@ public class JPAMascotaDAO extends JPAGenericDAO<Mascota, Integer> implements Ma
     public List<Mascota> buscarPorEspecie(String especie) {
         try {
             return em.createQuery(
-                    "SELECT m FROM Mascota m WHERE LOWER(m.especie) LIKE LOWER(:especie)",
-                    Mascota.class)
+                            "SELECT m FROM Mascota m WHERE LOWER(m.especie) LIKE LOWER(:especie)",
+                            Mascota.class)
                     .setParameter("especie", "%" + especie + "%")
                     .getResultList();
         } catch (Exception e) {
