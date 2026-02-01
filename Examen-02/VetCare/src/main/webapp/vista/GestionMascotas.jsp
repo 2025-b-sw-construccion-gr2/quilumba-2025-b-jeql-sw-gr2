@@ -52,57 +52,81 @@
                                             <div class="alert alert-info">
                                                 <p>No tienes mascotas registradas.</p>
                                             </div>
-                                            <% } else { %>
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Nombre</th>
-                                                            <th>Especie</th>
-                                                            <th>Raza</th>
-                                                            <th>Fecha de Nacimiento</th>
-                                                            <th>Sexo</th>
-                                                            <th>Peso (kg)</th>
-                                                            <th>Acciones</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <% for (Mascota m : mascotas) { %>
-                                                            <tr>
-                                                                <td>
-                                                                    <%= m.getNombre() %>
-                                                                </td>
-                                                                <td>
-                                                                    <%= m.getEspecie() %>
-                                                                </td>
-                                                                <td>
-                                                                    <%= m.getRaza() !=null ? m.getRaza() : "-" %>
-                                                                </td>
-                                                                <td>
-                                                                    <%= m.getFechaNacimiento() !=null ? new
-                                                                        java.text.SimpleDateFormat("dd/MM/yyyy").format(m.getFechaNacimiento())
-                                                                        : "-" %>
-                                                                </td>
-                                                                <td>
-                                                                    <%= m.getSexo() !=null ? m.getSexo() : "-" %>
-                                                                </td>
-                                                                <td>
-                                                                    <%= m.getPeso()> 0 ? String.format("%.2f",
-                                                                        m.getPeso()) : "-" %>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="flex-container">
-                                                                        <a class="btn btn-sm btn-outline"
-                                                                            href="<%=request.getContextPath()%>/ControlMascota?accion=iniciarEdicion&id=<%= m.getId() %>">Editar</a>
-                                                                        <a class="btn btn-sm btn-danger"
-                                                                            href="<%=request.getContextPath()%>/ControlMascota?accion=eliminarMascota&id=<%= m.getId() %>"
-                                                                            onclick="return confirm('¿Está seguro de eliminar esta mascota?')">Eliminar</a>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <% } %>
-                                                    </tbody>
-                                                </table>
-                                                <% } %>
+                                            <% } else { // Agrupar mascotas por especie java.util.Map<String,
+                                                java.util.List<Mascota>> mascotasPorEspecie = new
+                                                java.util.LinkedHashMap<>();
+                                                    for (Mascota m : mascotas) {
+                                                    String especie = m.getEspecie() != null ? m.getEspecie() : "Sin
+                                                    especie";
+                                                    if (!mascotasPorEspecie.containsKey(especie)) {
+                                                    mascotasPorEspecie.put(especie, new java.util.ArrayList<>());
+                                                        }
+                                                        mascotasPorEspecie.get(especie).add(m);
+                                                        }
+                                                        %>
+
+                                                        <% for (java.util.Map.Entry<String, java.util.List<Mascota>>
+                                                            entry : mascotasPorEspecie.entrySet()) {
+                                                            String especie = entry.getKey();
+                                                            java.util.List<Mascota> mascotasEspecie = entry.getValue();
+                                                                %>
+
+                                                                <h3
+                                                                    style="margin-top: 20px; margin-bottom: 15px; color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 8px;">
+                                                                    <%= especie %> (<%= mascotasEspecie.size() %>)
+                                                                </h3>
+
+                                                                <table class="table">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Nombre</th>
+                                                                            <th>Raza</th>
+                                                                            <th>Fecha de Nacimiento</th>
+                                                                            <th>Sexo</th>
+                                                                            <th>Peso (kg)</th>
+                                                                            <th>Acciones</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <% for (Mascota m : mascotasEspecie) { %>
+                                                                            <tr>
+                                                                                <td>
+                                                                                    <%= m.getNombre() %>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <%= m.getRaza() !=null ? m.getRaza()
+                                                                                        : "-" %>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <%= m.getFechaNacimiento() !=null ?
+                                                                                        new
+                                                                                        java.text.SimpleDateFormat("dd/MM/yyyy").format(m.getFechaNacimiento())
+                                                                                        : "-" %>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <%= m.getSexo() !=null ? m.getSexo()
+                                                                                        : "-" %>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <%= m.getPeso()> 0 ?
+                                                                                        String.format("%.2f",
+                                                                                        m.getPeso()) : "-" %>
+                                                                                </td>
+                                                                                <td>
+                                                                                    <div class="flex-container">
+                                                                                        <a class="btn btn-sm btn-outline"
+                                                                                            href="<%=request.getContextPath()%>/ControlMascota?accion=iniciarEdicion&id=<%= m.getId() %>">Editar</a>
+                                                                                        <a class="btn btn-sm btn-danger"
+                                                                                            href="<%=request.getContextPath()%>/ControlMascota?accion=eliminarMascota&id=<%= m.getId() %>"
+                                                                                            onclick="return confirm('¿Está seguro de eliminar esta mascota?')">Eliminar</a>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <% } %>
+                                                                    </tbody>
+                                                                </table>
+                                                                <% } %>
+                                                                    <% } %>
                     </div>
                 </section>
             </main>

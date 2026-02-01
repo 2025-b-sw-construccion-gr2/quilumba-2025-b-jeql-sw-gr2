@@ -49,4 +49,15 @@ class MascotaDAOTest {
         mascota.setPeso(peso);
         assertEquals(peso, mascota.getPeso());
     }
+
+    @Test
+    void testBuscarPorEspecieMethodExists() {
+        // Verify that the buscarPorEspecie method exists in MascotaDAO interface
+        try {
+            MascotaDAO.class.getMethod("buscarPorEspecie", String.class);
+            assertTrue(true);
+        } catch (NoSuchMethodException e) {
+            fail("Method buscarPorEspecie should exist in MascotaDAO");
+        }
+    }
 }

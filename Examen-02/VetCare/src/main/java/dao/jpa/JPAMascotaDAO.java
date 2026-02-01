@@ -24,4 +24,18 @@ public class JPAMascotaDAO extends JPAGenericDAO<Mascota, Integer> implements Ma
             return Collections.emptyList();
         }
     }
+
+    @Override
+    public List<Mascota> buscarPorEspecie(String especie) {
+        try {
+            return em.createQuery(
+                            "SELECT m FROM Mascota m WHERE LOWER(m.especie) LIKE LOWER(:especie)",
+                            Mascota.class)
+                    .setParameter("especie", "%" + especie + "%")
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+    }
 }
